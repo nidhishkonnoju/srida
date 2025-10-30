@@ -1,0 +1,71 @@
+/* You can add global styles to this file, and also import other style files */
+/* Global Styles */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
+
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, .brand-font {
+  font-family: 'Playfair Display', serif;
+}
+
+/* Body reset to handle fixed header */
+body {
+  margin: 0;
+  padding: 0%;
+  background-color: #f8f9fa;
+}
+
+/* Custom Colors for Srida Wedding Planner */
+:root {
+  --primary-brown: #8B4513;
+  --secondary-brown: #D2691E;
+  --light-brown: #F5E6D3;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-brown), var(--secondary-brown));
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 500;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #654321, var(--primary-brown));
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(139, 69, 19, 0.3);
+}
+
+.text-primary {
+  color: var(--primary-brown) !important;
+}
+
+.bg-primary {
+  background-color: var(--primary-brown) !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-brown);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #654321;
+}
+
+/* Smooth transitions for all interactive elements */
+a, button, .card {
+  transition: all 0.3s ease;
+}
