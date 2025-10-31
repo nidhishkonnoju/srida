@@ -23,9 +23,7 @@
                 "input": "public"
               }
             ],
-            "polyfills": [
-              "src/polyfills.ts"
-            ],
+            "polyfills": [],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"

@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 
 export interface User {
@@ -15,8 +16,10 @@ export class AuthService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor() {
-    this.loadUserFromStorage();
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.loadUserFromStorage();
+    }
   }
 
   // Mock login for testing
@@ -31,7 +34,9 @@ export class AuthService {
         };
         
         this.currentUserSubject.next(user);
-        localStorage.setItem('srida_user', JSON.stringify(user));
+        if (isPlatformBrowser(this.platformId)) {
+          localStorage.setItem('srida_user', JSON.stringify(user));
+        }
         console.log('🔐 User logged in:', user.name);
         resolve(true);
       }, 1000);
@@ -50,7 +55,9 @@ export class AuthService {
         };
         
         this.currentUserSubject.next(user);
-        localStorage.setItem('srida_user', JSON.stringify(user));
+        if (isPlatformBrowser(this.platformId)) {
+          localStorage.setItem('srida_user', JSON.stringify(user));
+        }
         console.log('🔐 User registered:', user.name);
         resolve(true);
       }, 1000);
@@ -60,7 +67,9 @@ export class AuthService {
   // Logout user
   logout(): void {
     this.currentUserSubject.next(null);
-    localStorage.removeItem('srida_user');
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('srida_user');
+    }
     console.log('🔐 User logged out');
   }
 
@@ -76,14 +85,16 @@ export class AuthService {
 
   // Load user from localStorage
   private loadUserFromStorage(): void {
-    const userData = localStorage.getItem('srida_user');
-    if (userData) {
-      try {
-        const user = JSON.parse(userData);
-        this.currentUserSubject.next(user);
-        console.log('🔐 User loaded from storage:', user.name);
-      } catch (error) {
-        console.error('Error parsing user data:', error);
+    if (isPlatformBrowser(this.platformId)) {
+      const userData = localStorage.getItem('srida_user');
+      if (userData) {
+        try {
+          const user = JSON.parse(userData);
+          this.currentUserSubject.next(user);
+          console.log('🔐 User loaded from storage:', user.name);
+        } catch (error) {
+          console.error('Error parsing user data:', error);
+        }
       }
     }
   }

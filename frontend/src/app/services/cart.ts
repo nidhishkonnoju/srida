@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 
 export interface CartItem {
@@ -18,8 +19,10 @@ export class CartService {
   private cartTotalSubject = new BehaviorSubject<number>(0);
   private cartCountSubject = new BehaviorSubject<number>(0);
 
-  constructor() {
-    this.loadCartFromStorage();
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.loadCartFromStorage();
+    }
   }
 
   getCartItems() {
@@ -104,14 +107,18 @@ export class CartService {
   }
 
   private saveCartToStorage() {
-    localStorage.setItem('srida_cart', JSON.stringify(this.cartItems));
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('srida_cart', JSON.stringify(this.cartItems));
+    }
   }
 
   private loadCartFromStorage() {
-    const savedCart = localStorage.getItem('srida_cart');
-    if (savedCart) {
-      this.cartItems = JSON.parse(savedCart);
-      this.updateCart();
+    if (isPlatformBrowser(this.platformId)) {
+      const savedCart = localStorage.getItem('srida_cart');
+      if (savedCart) {
+        this.cartItems = JSON.parse(savedCart);
+        this.updateCart();
+      }
     }
   }
 
