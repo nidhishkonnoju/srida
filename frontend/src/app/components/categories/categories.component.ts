@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { CartService } from '../../services/cart';
 
 @Component({
   selector: 'app-categories',
@@ -188,7 +189,7 @@ export class CategoriesComponent implements OnInit {
   loading = false;
   error = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private cartService: CartService) {}
 
   ngOnInit() {
     console.log('Categories component initialized');
@@ -272,6 +273,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   addToCart(item: any, categoryName: string, subcategoryName: string) {
+    this.cartService.addToCart(item, categoryName, subcategoryName);
     alert(`🎉 Added to cart: ${item.name}\n💰 Price: ₹${item.price}\n📦 Vendor: ${item.vendor}`);
     console.log('Adding to cart:', { item, categoryName, subcategoryName });
   }
