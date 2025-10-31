@@ -201,7 +201,7 @@ export class CategoriesComponent implements OnInit {
     
     console.log('🔄 Loading categories from backend...');
     
-    this.http.get<any[]>('/api/categories')
+    this.http.get<any[]>('https://srida-backend.onrender.com/api/categories')
       .subscribe({
         next: (data) => {
           console.log('✅ RAW DATA RECEIVED:', data);
